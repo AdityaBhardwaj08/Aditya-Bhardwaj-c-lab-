@@ -1,0 +1,47 @@
+/*Second-Largest Element
+Write a C program to find the second-largest distinct element in an array using recursion. Display a suitable message if fewer than two distinct elements exist.
+*/
+#include <stdio.h>
+#include <limits.h>
+
+void secondLargest(int arr[], int n, int i, int *largest, int *second) {
+    if (i == n)
+        return;
+
+    if (arr[i] > *largest) {
+        *second = *largest;
+        *largest = arr[i];
+    }
+    else if (arr[i] < *largest && arr[i] > *second) {
+        *second = arr[i];
+    }
+
+    secondLargest(arr, n, i + 1, largest, second);
+}
+
+int main() {
+    int n, i, largest = INT_MIN, second = INT_MIN;
+    int arr[100];
+
+    printf("Enter size of array: ");
+    scanf("%d", &n);
+
+    if (n < 1 || n > 100) {
+        printf("Invalid array size");
+        return 0;
+    }
+
+    printf("Enter array elements: ");
+    for (i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+
+    secondLargest(arr, n, 0, &largest, &second);
+
+    if (second == INT_MIN)
+        printf("No second-largest distinct element exists");
+    else
+        printf("Second-largest element = %d", second);
+
+    return 0;
+}
